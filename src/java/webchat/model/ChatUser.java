@@ -7,6 +7,10 @@ package webchat.model;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import webchat.utilities.AES;
 
 /**
@@ -18,9 +22,16 @@ public class ChatUser {
     private String Username;
     private String Password;
     
+    private static SessionFactory factory; 
+    
     public ChatUser(){}
     public ChatUser(int userid, String name, String pwd){
         UserId = userid;
+        Username = name;
+        Password = pwd;
+    }
+    
+    public ChatUser(String name, String pwd){
         Username = name;
         Password = pwd;
     }
@@ -52,6 +63,25 @@ public class ChatUser {
         catch(Exception ex){
             Logger.getLogger(ChatUser.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public static Integer createUser(String name, String pass){
+        Session session = factory.openSession();
+        Transaction tx = null;
+        Integer ret = null;
+        try{
+            tx = session.beginTransaction();
+            ChatUser newuser = new ChatUser(name, pass);
+            ret = (Integer)session.save(newuser);
+            tx.commit();
+        }
+        catch(HibernateException ex){
+            if (tx!=null) tx.rollback();
+        }
+        finally{
+            session.close();
+        }
+        return ret;
     }
     
 }
