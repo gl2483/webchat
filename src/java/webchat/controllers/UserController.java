@@ -16,6 +16,7 @@ import webchat.model.ChatUser;
  * @author luoguanqi
  */
 @Controller
+@RequestMapping("/user")
 public class UserController{
     
     
