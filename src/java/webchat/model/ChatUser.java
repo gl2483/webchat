@@ -12,6 +12,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import webchat.utilities.AES;
+import webchat.utilities.HibernateUtil;
 
 /**
  *
@@ -21,8 +22,7 @@ public class ChatUser {
     private int UserId;
     private String Username;
     private String Password;
-    
-    private static SessionFactory factory; 
+     
     
     public ChatUser(){}
     public ChatUser(int userid, String name, String pwd){
@@ -66,6 +66,7 @@ public class ChatUser {
     }
     
     public static Integer createUser(String name, String pass){
+        SessionFactory factory = HibernateUtil.getSessionFactory();
         Session session = factory.openSession();
         Transaction tx = null;
         Integer ret = null;
@@ -83,5 +84,7 @@ public class ChatUser {
         }
         return ret;
     }
+    
+    
     
 }

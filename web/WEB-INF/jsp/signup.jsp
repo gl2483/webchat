@@ -21,7 +21,7 @@
                     };
                     $.ajax({
                         type: "POST",
-                        url: "CreateAccount",
+                        url: "user/CreateAccount",
                         data: loginData,
                         success: function (result) {
                             alert("success");

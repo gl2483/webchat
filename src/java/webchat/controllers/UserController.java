@@ -7,8 +7,9 @@ package webchat.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 import webchat.model.ChatUser;
 
 /**
@@ -16,19 +17,14 @@ import webchat.model.ChatUser;
  * @author luoguanqi
  */
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/user/*")
 public class UserController{
     
     
-    @RequestMapping(value="/signup")
-    public ModelAndView signup(){
-        return new ModelAndView("signup");
-    }
-    
-    @RequestMapping("/CreateAccount")
-    public ModelAndView CreateAccount(@RequestParam("username") String usrname, @RequestParam("password") String password){
-        
-        ChatUser.createUser(usrname, password);
-        return new ModelAndView("ChatClient");
+    @RequestMapping(value="CreateAccount", method=RequestMethod.POST)
+    @ResponseBody
+    public int CreateAccount(@RequestParam("username") String usrname, @RequestParam("password") String password){
+        return    ChatUser.createUser(usrname, password);
+
     }
 }

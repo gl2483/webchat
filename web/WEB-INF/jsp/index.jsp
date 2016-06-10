@@ -6,8 +6,19 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Welcome to Spring Web MVC project</title>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/jquery-1.12.3.js"></script>
+        <script type="text/javascript">
+            $().ready(function(){
+                
+                $("#signup").click(function(){
+                    window.location.replace("signup");
+                });
+                
+                
+            });
+        </script>
     </head>
-
+        
     <body>
         <table>
             <tr>
